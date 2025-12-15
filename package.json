@@ -1,0 +1,32 @@
+{
+  "name": "charli3-substrate-feeder-ts",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/core/server.ts",
+    "dev:config": "ts-node src/core/server.ts --config",
+    "start": "node dist/core/server.js",
+    "start:config": "node dist/core/server.js --config",
+    "cli": "ts-node src/core/cli.ts",
+    "cli:config": "ts-node src/core/cli.ts --config",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@uniswap/v3-core": "^1.0.1",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@uniswap/sdk-core": "^7.10.0",
+    "@uniswap/v3-sdk": "^3.26.0",
+    "dotenv": "^17.2.3",
+    "ethers": "^6.16.0",
+    "express": "^5.2.1",
+    "yaml": "^2.8.2"
+  }
+}

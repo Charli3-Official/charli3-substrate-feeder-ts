@@ -1,0 +1,46 @@
+Logger:
+  verbosity: INFO
+
+EVMQuery:
+  rpc_url: https://eth.llamarpc.com
+  chain_id: 1  # Ethereum mainnet
+  max_concurrent: 10
+
+Rates:
+  ETH-USD:
+    general_base_symbol: ETH-USD
+    general_quote_symbol: null
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          asset_a: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"  # WETH
+          asset_b: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"  # USDC
+          quote_required: false
+          sources:
+            - 500    # 0.05% fee tier only
+            - 3000   # 0.3% fee tier only
+
+  LINK-USD:
+    general_base_symbol: LINK-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          asset_a: "0x514910771AF9Ca656af840dff83E8264EcF986CA"  # LINK
+          asset_b: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"  # USDC
+          quote_required: false
+          sources: [] 
+
+  WBTC-USD:
+    general_base_symbol: WBTC-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          asset_a: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"  # WBTC
+          asset_b: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"  # USDC
+          sources: []
+
+# Fee Tiers (Uniswap V3):
+# 100   - 0.01% (stablecoin pairs)
+# 500   - 0.05% (most common)
+# 3000  - 0.3%  (standard)
+# 10000 - 1%    (exotic pairs)
