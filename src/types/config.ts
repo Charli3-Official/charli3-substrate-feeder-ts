@@ -8,6 +8,10 @@ export interface EVMQueryConfig {
     max_concurrent?: number;
 }
 
+export interface SubstrateConfig {
+    node_url: string;
+}
+
 export interface DexConfig {
     adapter: string;
     asset_a: string;
@@ -31,5 +35,6 @@ export interface RateConfig {
 export interface AppConfig {
     Logger: LoggerConfig;
     EVMQuery: EVMQueryConfig;
+    Substrate?: SubstrateConfig;
     Rates: Record<string, RateConfig>;
 }

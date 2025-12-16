@@ -22,6 +22,9 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@polkadot/api": "^16.5.4",
+    "@polkadot/types": "^16.5.4",
+    "@polkadot/util": "^14.0.1",
     "@uniswap/sdk-core": "^7.10.0",
     "@uniswap/v3-sdk": "^3.26.0",
     "dotenv": "^17.2.3",

@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express';
 import { AdapterFactory } from './adapterFactory';
 import { PriceAggregator } from '../service/aggregator';
+import { SubstrateService } from '../service/substrate';
+import { processAndSubmit } from '../service/runner';
 import { PriceRequest, PriceResponse } from '../types';
 import { loadConfig } from '../utils/configLoader';
 import * as path from 'path';
@@ -16,7 +18,7 @@ if (configIndex !== -1) {
     configPath = args[configIndex + 1] || configPath;
 }
 
-let config;
+let config: any;
 try {
     console.log(`Loading config from ${configPath}...`);
     config = loadConfig(path.resolve(process.cwd(), configPath));
@@ -97,10 +99,38 @@ app.post('/api/prices', async (req: Request, res: Response) => {
  * Start server
  */
 export function startServer() {
-    app.listen(PORT, () => {
+    app.listen(PORT, async () => {
         console.log(`Price service listening on port ${PORT}`);
         console.log(`RPC URL: ${RPC_URL}`);
         console.log(`Chain ID: ${CHAIN_ID}`);
+
+        if (config && config.Substrate) {
+            const substrateService = new SubstrateService(config.Substrate);
+            await substrateService.connect();
+
+            const intervalIndex = args.indexOf('--interval');
+            const interval = intervalIndex !== -1 ? parseInt(args[intervalIndex + 1] || '60', 10) : 60;
+
+            console.log(`Starting periodic runner with interval ${interval}s`);
+
+            // Run in background
+            (async () => {
+                while (true) {
+                    const startTime = Date.now();
+                    try {
+                        await processAndSubmit(config, adapterFactory, substrateService);
+                    } catch (e) {
+                        console.error('Error in periodic runner:', e);
+                    }
+
+                    const elapsed = (Date.now() - startTime) / 1000;
+                    const waitTime = Math.max(0, interval - elapsed);
+                    if (waitTime > 0) {
+                        await new Promise(r => setTimeout(r, waitTime * 1000));
+                    }
+                }
+            })();
+        }
     });
 }
 
