@@ -36,7 +36,7 @@ export class AdapterFactory {
 
   private parseFeeTiers(sources: (string | number)[]): number[] | undefined {
     const feeTiers: number[] = [];
-    
+
     for (const source of sources) {
       const sourceStr = source.toString();
       const feeMatch = sourceStr.match(/^(\d+)$/);

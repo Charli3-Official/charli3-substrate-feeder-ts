@@ -1,16 +1,19 @@
 import { UniswapV3Adapter } from '../service/priceAdapter/evm/UniswapV3Adapter';
 import { PriceAggregator } from '../service/aggregator';
+import { SubstrateService } from '../service/substrate';
 import { loadConfig } from '../utils/configLoader';
 import { AdapterFactory } from './adapterFactory';
+import { processAndSubmit, displayRates } from '../service/runner';
 import * as path from 'path';
 
 async function main() {
   const args = process.argv.slice(2);
-  
+
   const configIndex = args.indexOf('--config');
+
   if (configIndex !== -1) {
     const configPath = args[configIndex + 1] || 'config.yml';
-    await runFromConfig(configPath);
+    await runService(configPath);
     return;
   }
 
@@ -37,46 +40,25 @@ async function main() {
   displayRates(rates, aggregator);
 }
 
-async function runFromConfig(configPath: string) {
+async function runService(configPath: string) {
   console.log(`Loading config from ${configPath}...`);
   const config = loadConfig(path.resolve(process.cwd(), configPath));
-  
+
   const factory = new AdapterFactory(config.EVMQuery);
+  let substrateService: SubstrateService | null = null;
 
-  for (const [pairName, rateConfig] of Object.entries(config.Rates)) {
-    console.log(`\nProcessing ${pairName}...`);
-    const aggregator = new PriceAggregator();
-    
-    if (rateConfig.base_currency.dexes) {
-      for (const dexConfig of rateConfig.base_currency.dexes) {
-        try {
-          const adapter = factory.createAdapter(dexConfig);
-          aggregator.addAdapter(adapter);
-        } catch (error) {
-          console.error(`Failed to create adapter for ${pairName}:`, error);
-        }
-      }
+  if (config.Substrate) {
+    substrateService = new SubstrateService(config.Substrate);
+    await substrateService.connect();
+  }
+
+  try {
+    await processAndSubmit(config, factory, substrateService);
+  } finally {
+    if (substrateService) {
+      await substrateService.disconnect();
     }
-
-    const rates = await aggregator.fetchRates();
-    displayRates(rates, aggregator);
-
   }
-}
-
-function displayRates(rates: any[], aggregator: PriceAggregator) {
-  if (rates.length === 0) {
-    console.log('No rates found');
-    return;
-  }
-
-  console.log('Rates found:');
-  rates.forEach(rate => {
-    console.log(`  ${rate.source}: ${rate.price} (liquidity: ${rate.metadata.liquidity})`);
-  });
-
-  const median = aggregator.calculateMedian(rates);
-  console.log(`Median price: ${median}`);
 }
 
 if (require.main === module) {
@@ -84,9 +66,3 @@ if (require.main === module) {
 }
 
 export { main };
-
-
-
-
-
-

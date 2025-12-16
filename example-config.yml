@@ -6,6 +6,9 @@ EVMQuery:
   chain_id: 1  # Ethereum mainnet
   max_concurrent: 10
 
+Substrate:
+  node_url: ws://127.0.0.1:9948
+
 Rates:
   ETH-USD:
     general_base_symbol: ETH-USD
