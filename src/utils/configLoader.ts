@@ -14,8 +14,8 @@ export function loadConfig(configPath: string): AppConfig {
         if (!config.Logger) {
             throw new Error('Missing Logger configuration');
         }
-        if (!config.EVMQuery) {
-            throw new Error('Missing EVMQuery configuration');
+        if (!config.EVMChains || config.EVMChains.length === 0) {
+            throw new Error('Missing EVMChains configuration. Please update to the new multi-chain format.');
         }
         if (!config.Rates || Object.keys(config.Rates).length === 0) {
             throw new Error('Missing or empty Rates configuration');

@@ -44,7 +44,11 @@ async function runService(configPath: string) {
   console.log(`Loading config from ${configPath}...`);
   const config = loadConfig(path.resolve(process.cwd(), configPath));
 
-  const factory = new AdapterFactory(config.EVMQuery);
+  if (!config.EVMChains || config.EVMChains.length === 0) {
+    throw new Error('EVMChains configuration is required. Please update your config file to the new format.');
+  }
+
+  const factory = new AdapterFactory(config.EVMChains);
   let substrateService: SubstrateService | null = null;
 
   if (config.Substrate) {
