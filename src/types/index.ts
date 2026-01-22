@@ -9,6 +9,7 @@ export interface AdapterConfig {
     rpcUrl: string;
     chainId: number;
     maxConcurrent?: number;
+    factoryAddress?: string;
 }
 
 export interface PriceRequest {

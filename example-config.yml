@@ -1,49 +1,134 @@
 Logger:
   verbosity: INFO
 
-EVMQuery:
-  rpc_url: https://eth.llamarpc.com
-  chain_id: 1  # Ethereum mainnet
-  max_concurrent: 10
+# Define EVM chains to query (REQUIRED)
+EVMChains:
+  - chain_id: 1
+    name: ethereum
+    rpc_url: https://eth.llamarpc.com
+    factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+    max_concurrent: 10  # Optional: max concurrent RPC requests
+  
+  - chain_id: 56
+    name: bsc
+    rpc_url: https://bsc-dataseed.binance.org
+    factory_address: "0x0BFbCF9fa4f9C56B0F40a671Ad40E0805A091865"
+    max_concurrent: 10
+  
+  - chain_id: 8453
+    name: base
+    rpc_url: https://base.llamarpc.com
+    factory_address: "0x33128a8fC17869897dcE68Ed026d694621f6FDfD"
+    max_concurrent: 10
+  
+  - chain_id: 137
+    name: polygon
+    rpc_url: https://polygon-rpc.com
+    factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+    max_concurrent: 10
+  
+  - chain_id: 42161
+    name: arbitrum
+    rpc_url: https://arb1.arbitrum.io/rpc
+    factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+    max_concurrent: 10
+  
+  - chain_id: 10
+    name: optimism
+    rpc_url: https://mainnet.optimism.io
+    factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+    max_concurrent: 10
 
-Substrate:
-  node_url: ws://127.0.0.1:9948
+# Optional: Substrate integration
+# Substrate:
+#   node_url: ws://127.0.0.1:9948
 
 Rates:
+  # Ethereum: WETH/USDC
   ETH-USD:
     general_base_symbol: ETH-USD
-    general_quote_symbol: null
+    general_quote_symbol: null  # Optional: quote symbol name
     base_currency:
       dexes:
         - adapter: uniswap-v3
+          chain_id: 1  # REQUIRED: which chain to query
           asset_a: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"  # WETH
           asset_b: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"  # USDC
-          quote_required: false
-          sources:
-            - 500    # 0.05% fee tier only
-            - 3000   # 0.3% fee tier only
+          quote_required: false  # Optional: if quote currency needed
+          sources: [500, 3000]  # Fee tiers (empty [] = all defaults)
 
-  LINK-USD:
-    general_base_symbol: LINK-USD
+  # BSC: WBNB/USDT (PancakeSwap V3)
+  BNB-USD:
+    general_base_symbol: BNB-USD
     base_currency:
       dexes:
         - adapter: uniswap-v3
-          asset_a: "0x514910771AF9Ca656af840dff83E8264EcF986CA"  # LINK
-          asset_b: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"  # USDC
-          quote_required: false
-          sources: [] 
+          chain_id: 56
+          asset_a: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"  # WBNB
+          asset_b: "0x55d398326f99059fF775485246999027B3197955"  # USDT
+          sources: [500, 2500]
 
-  WBTC-USD:
-    general_base_symbol: WBTC-USD
+  # Base: WETH/USDC
+  BASE-ETH-USD:
+    general_base_symbol: BASE-ETH-USD
     base_currency:
       dexes:
         - adapter: uniswap-v3
-          asset_a: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"  # WBTC
-          asset_b: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"  # USDC
-          sources: []
+          chain_id: 8453
+          asset_a: "0x4200000000000000000000000000000000000006"  # WETH
+          asset_b: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"  # USDC
+          sources: [500, 3000]
 
-# Fee Tiers (Uniswap V3):
-# 100   - 0.01% (stablecoin pairs)
-# 500   - 0.05% (most common)
-# 3000  - 0.3%  (standard)
-# 10000 - 1%    (exotic pairs)
+  # Polygon: WMATIC/USDC
+  POLYGON-MATIC-USD:
+    general_base_symbol: POLYGON-MATIC-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 137
+          asset_a: "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270"  # WMATIC
+          asset_b: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"  # USDC
+          sources: [500, 3000]
+
+  # Arbitrum: WETH/USDC
+  ARB-ETH-USD:
+    general_base_symbol: ARB-ETH-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 42161
+          asset_a: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"  # WETH
+          asset_b: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"  # USDC
+          sources: [500, 3000]
+
+  # Optimism: WETH/USDC
+  OP-ETH-USD:
+    general_base_symbol: OP-ETH-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 10
+          asset_a: "0x4200000000000000000000000000000000000006"  # WETH
+          asset_b: "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85"  # USDC
+          sources: [500, 3000]
+
+  # Example with quote currency (for indirect pairs like ETH-ADA)
+  # ETH-ADA:
+  #   general_base_symbol: ETH-ADA
+  #   general_quote_symbol: ADA
+  #   base_currency:
+  #     dexes:
+  #       - adapter: uniswap-v3
+  #         chain_id: 1
+  #         asset_a: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"  # WETH
+  #         asset_b: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"  # USDC
+  #         quote_required: true
+  #         sources: []
+  #   quote_currency:
+  #     dexes:
+  #       - adapter: uniswap-v3
+  #         chain_id: 1
+  #         asset_a: "0xADA_TOKEN_ADDRESS"
+  #         asset_b: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"  # USDC
+  #         quote_calc_method: divide  # or 'multiply'
+  #         sources: []

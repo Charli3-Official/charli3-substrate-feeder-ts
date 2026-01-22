@@ -23,28 +23,33 @@ try {
     console.log(`Loading config from ${configPath}...`);
     config = loadConfig(path.resolve(process.cwd(), configPath));
 } catch (e) {
-    console.warn(`Could not load config file from ${configPath}, using defaults/env vars`);
+    console.error(`Failed to load config file from ${configPath}:`, e);
+    process.exit(1);
+}
+
+if (!config?.EVMChains || config.EVMChains.length === 0) {
+    console.error('ERROR: EVMChains configuration is required. Please update your config file to the new format.');
+    process.exit(1);
 }
 
 const PORT = parseInt(process.env.PORT || '3000');
-const RPC_URL = config?.EVMQuery.rpc_url || process.env.RPC_URL || 'https://eth.llamarpc.com';
-const CHAIN_ID = config?.EVMQuery.chain_id || parseInt(process.env.CHAIN_ID || '1');
 
-const adapterFactory = new AdapterFactory({
-    rpc_url: RPC_URL,
-    chain_id: CHAIN_ID,
-    ...(config?.EVMQuery.max_concurrent !== undefined && { max_concurrent: config.EVMQuery.max_concurrent })
-});
+const adapterFactory = new AdapterFactory(config.EVMChains);
 
 /**
  * Health check endpoint
  */
 app.get('/health', (req: Request, res: Response) => {
+    const supportedChains = config.EVMChains.map((c: any) => ({
+        chainId: c.chain_id,
+        name: c.name,
+        rpcUrl: c.rpc_url,
+    }));
+
     res.json({
         status: 'healthy',
         timestamp: new Date().toISOString(),
-        rpcUrl: RPC_URL,
-        chainId: CHAIN_ID,
+        supportedChains,
     });
 });
 
@@ -64,17 +69,22 @@ app.post('/api/prices', async (req: Request, res: Response) => {
 
         const results = await Promise.all(
             pairs.map(async (pair) => {
+                // For backward compatibility, default to Ethereum if chain_id not specified
+                const chainId = (pair as any).chainId || 1;
+                
                 const adapter = adapterFactory.createAdapter({
                     adapter: 'uniswap-v3',
                     asset_a: pair.baseAsset,
                     asset_b: pair.quoteAsset,
-                    sources: pair.sources || []
+                    sources: pair.sources || [],
+                    chain_id: chainId,
                 });
 
                 const rates = await adapter.getRates();
 
                 return {
                     pair: `${pair.baseAsset}-${pair.quoteAsset}`,
+                    chainId,
                     rates,
                 };
             })
@@ -101,8 +111,10 @@ app.post('/api/prices', async (req: Request, res: Response) => {
 export function startServer() {
     app.listen(PORT, async () => {
         console.log(`Price service listening on port ${PORT}`);
-        console.log(`RPC URL: ${RPC_URL}`);
-        console.log(`Chain ID: ${CHAIN_ID}`);
+        console.log(`Configured chains:`);
+        config.EVMChains.forEach((c: any) => {
+            console.log(`  - ${c.name} (Chain ID: ${c.chain_id})`);
+        });
 
         if (config && config.Substrate) {
             const substrateService = new SubstrateService(config.Substrate);

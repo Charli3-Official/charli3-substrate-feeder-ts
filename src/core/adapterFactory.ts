@@ -1,26 +1,53 @@
 import { BaseAdapter } from '../service/priceAdapter/BaseAdapter';
 import { UniswapV3Adapter } from '../service/priceAdapter/evm/UniswapV3Adapter';
-import { DexConfig, EVMQueryConfig } from '../types/config';
+import { DexConfig, EVMChainConfig } from '../types/config';
 import { AdapterConfig } from '../types';
+import { getChainInfo } from '../utils/chainConstants';
 
 
 export class AdapterFactory {
-  private evmConfig: EVMQueryConfig;
+  private chainConfigs: Map<number, EVMChainConfig>;
 
-  constructor(evmConfig: EVMQueryConfig) {
-    this.evmConfig = evmConfig;
+  constructor(chainConfigs: EVMChainConfig[]) {
+    this.chainConfigs = new Map();
+    
+    for (const config of chainConfigs) {
+      this.chainConfigs.set(config.chain_id, config);
+    }
+
+    if (this.chainConfigs.size === 0) {
+      throw new Error('At least one chain configuration is required in EVMChains');
+    }
   }
 
   createAdapter(dexConfig: DexConfig): BaseAdapter {
+    const chainId = dexConfig.chain_id;
+    const chainConfig = this.chainConfigs.get(chainId);
+    
+    if (!chainConfig) {
+      const availableChains = Array.from(this.chainConfigs.values())
+        .map(c => `${c.name} (${c.chain_id})`)
+        .join(', ');
+      throw new Error(
+        `Chain ${chainId} is not configured. Available chains: ${availableChains}`
+      );
+    }
+
     const adapterConfig: AdapterConfig = {
-      rpcUrl: this.evmConfig.rpc_url,
-      chainId: this.evmConfig.chain_id,
-      ...(this.evmConfig.max_concurrent !== undefined && { maxConcurrent: this.evmConfig.max_concurrent }),
+      rpcUrl: chainConfig.rpc_url,
+      chainId: chainId,
+      factoryAddress: chainConfig.factory_address,
+      ...(chainConfig.max_concurrent !== undefined && { maxConcurrent: chainConfig.max_concurrent }),
     };
+
+    const chainInfo = getChainInfo(chainId);
+    console.log(`Creating adapter for ${chainInfo?.name || 'Unknown'} (chain ${chainId})`);
 
     switch (dexConfig.adapter.toLowerCase()) {
       case 'uniswapv3':
       case 'uniswap-v3':
+      case 'pancakeswapv3':
+      case 'pancakeswap-v3':
         return new UniswapV3Adapter(
           dexConfig.asset_a,
           dexConfig.asset_b,
