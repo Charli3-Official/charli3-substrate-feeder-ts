@@ -23,7 +23,7 @@ EVMChains:
   
   - chain_id: 137
     name: polygon
-    rpc_url: https://polygon-rpc.com
+    rpc_url: https://polygon-bor-rpc.publicnode.com
     factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
     max_concurrent: 10
   
@@ -55,6 +55,11 @@ Rates:
           asset_a: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"  # WETH
           asset_b: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"  # USDC
           quote_required: false  # Optional: if quote currency needed
+          # Fee Tiers (Uniswap V3):
+          # 100   - 0.01% (stablecoin pairs)
+          # 500   - 0.05% (most common)
+          # 3000  - 0.3%  (standard)
+          # 10000 - 1%    (exotic pairs)
           sources: [500, 3000]  # Fee tiers (empty [] = all defaults)
 
   # BSC: WBNB/USDT (PancakeSwap V3)
