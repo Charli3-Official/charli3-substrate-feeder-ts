@@ -2,9 +2,11 @@ export interface LoggerConfig {
     verbosity: 'DEBUG' | 'INFO' | 'WARN' | 'ERROR';
 }
 
-export interface EVMQueryConfig {
-    rpc_url: string;
+export interface EVMChainConfig {
     chain_id: number;
+    name: string;
+    rpc_url: string;
+    factory_address: string;
     max_concurrent?: number;
 }
 
@@ -19,6 +21,7 @@ export interface DexConfig {
     quote_required?: boolean;
     quote_calc_method?: 'multiply' | 'divide';
     sources: string[];
+    chain_id: number;  // Now required!
 }
 
 export interface CurrencyConfig {
@@ -34,7 +37,7 @@ export interface RateConfig {
 
 export interface AppConfig {
     Logger: LoggerConfig;
-    EVMQuery: EVMQueryConfig;
+    EVMChains: EVMChainConfig[];  // Now required!
     Substrate?: SubstrateConfig;
     Rates: Record<string, RateConfig>;
 }
