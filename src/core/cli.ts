@@ -57,7 +57,35 @@ async function runService(configPath: string) {
   }
 
   try {
-    await processAndSubmit(config, factory, substrateService);
+    // Check for interval flag
+    const args = process.argv.slice(2);
+    const intervalIndex = args.indexOf('--interval');
+    
+    if (intervalIndex !== -1) {
+      const intervalMs = parseInt(args[intervalIndex + 1] || '60000', 10);
+      console.log(`Starting periodic execution with interval ${intervalMs}ms (${intervalMs / 1000}s)\n`);
+      
+      // Run continuously
+      while (true) {
+        const startTime = Date.now();
+        try {
+          await processAndSubmit(config, factory, substrateService);
+        } catch (error) {
+          console.error('Error in periodic execution:', error);
+        }
+        
+        const elapsed = Date.now() - startTime;
+        const waitTime = Math.max(0, intervalMs - elapsed);
+        
+        if (waitTime > 0) {
+          console.log(`\nWaiting ${waitTime}ms before next execution...\n`);
+          await new Promise(resolve => setTimeout(resolve, waitTime));
+        }
+      }
+    } else {
+      // Run once
+      await processAndSubmit(config, factory, substrateService);
+    }
   } finally {
     if (substrateService) {
       await substrateService.disconnect();
