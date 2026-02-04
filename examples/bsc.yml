@@ -1,0 +1,20 @@
+Logger:
+  verbosity: INFO
+
+EVMChains:
+  - chain_id: 56
+    name: bsc
+    rpc_url: https://bsc-dataseed.binance.org
+    factory_address: "0x0BFbCF9fa4f9C56B0F40a671Ad40E0805A091865"
+    max_concurrent: 10
+
+Rates:
+  BNB-USD:
+    general_base_symbol: BNB-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 56
+          asset_a: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"  # WBNB
+          asset_b: "0x55d398326f99059fF775485246999027B3197955"  # USDT
+          sources: [500, 2500]

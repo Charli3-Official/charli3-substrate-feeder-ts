@@ -10,7 +10,7 @@ async function testPriceFetching() {
     console.log();
 
     // Load config from parent directory
-    const configPath = process.argv[2] || path.join(__dirname, '..', 'example-config.yml');
+    const configPath = process.argv[2] || path.join(__dirname, '..', 'examples', 'consolidated.yml');
     console.log(`📋 Loading config: ${configPath}`);
     const config = loadConfig(configPath);
     

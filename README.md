@@ -1,6 +1,6 @@
-# Charli3 Substrate Feeder
+# Charli3 Substrate Feeder Service
 
-Multi-chain price feeder for EVM DEXs. Fetches token prices from Uniswap V3 and compatible forks across multiple chains.
+Configurable feeder service with adapters for various EVM-based chains, fetching token prices from Uniswap V3 and compatible forks across multiple chains.
 
 ## Supported Chains
 
@@ -33,7 +33,10 @@ npm run build
 
 ## Configuration
 
-Create a `config.yml` file (see [example-config.yml](example-config.yml)):
+Create a `config.yml` file based on the examples in the [examples/](examples/) folder.
+
+- For single-chain adapter setup, use the chain-specific config (e.g., [ethereum.yml](examples/ethereum.yml)).
+- For multi-chain setups, use [consolidated.yml](examples/consolidated.yml) as a starting point.
 
 ### Basic Structure
 
