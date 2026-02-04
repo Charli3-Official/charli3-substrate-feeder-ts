@@ -1,0 +1,20 @@
+Logger:
+  verbosity: INFO
+
+EVMChains:
+  - chain_id: 10
+    name: optimism
+    rpc_url: https://mainnet.optimism.io
+    factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+    max_concurrent: 10
+
+Rates:
+  OP-ETH-USD:
+    general_base_symbol: OP-ETH-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 10
+          asset_a: "0x4200000000000000000000000000000000000006"  # WETH
+          asset_b: "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85"  # USDC
+          sources: [500, 3000]
