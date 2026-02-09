@@ -1,0 +1,20 @@
+Logger:
+  verbosity: INFO
+
+EVMChains:
+  - chain_id: 8453
+    name: base
+    rpc_url: https://base.llamarpc.com
+    factory_address: "0x33128a8fC17869897dcE68Ed026d694621f6FDfD"
+    max_concurrent: 10
+
+Rates:
+  BASE-ETH-USD:
+    general_base_symbol: BASE-ETH-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 8453
+          asset_a: "0x4200000000000000000000000000000000000006"  # WETH
+          asset_b: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"  # USDC
+          sources: [500, 3000]

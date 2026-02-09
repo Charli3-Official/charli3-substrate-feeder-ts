@@ -1,0 +1,20 @@
+Logger:
+  verbosity: INFO
+
+EVMChains:
+  - chain_id: 42161
+    name: arbitrum
+    rpc_url: https://arb1.arbitrum.io/rpc
+    factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+    max_concurrent: 10
+
+Rates:
+  ARB-ETH-USD:
+    general_base_symbol: ARB-ETH-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 42161
+          asset_a: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"  # WETH
+          asset_b: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"  # USDC
+          sources: [500, 3000]
