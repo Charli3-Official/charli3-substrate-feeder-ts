@@ -1,0 +1,44 @@
+version: "3.9"
+
+x-feeder-common: &feeder-common
+  build:
+    context: .
+  volumes:
+    - ./docker/config.template.yml:/app/config.template.yml:ro
+  extra_hosts:
+    - "host.docker.internal:host-gateway"
+  command: ["node", "dist/core/server.js", "--config", "/app/config.yml"]
+
+services:
+  feeder-9943:
+    <<: *feeder-common
+    environment:
+      SUBSTRATE_NODE_URL: ws://host.docker.internal:9933
+      RPC_ETHEREUM: ${RPC_ETHEREUM}
+      RPC_BASE: ${RPC_BASE}
+      RPC_POLYGON: ${RPC_POLYGON}
+      INTERVAL_SECONDS: ${INTERVAL_SECONDS:-300}
+    ports:
+      - "3001:3000"
+
+  feeder-9944:
+    <<: *feeder-common
+    environment:
+      SUBSTRATE_NODE_URL: ws://host.docker.internal:9934
+      RPC_ETHEREUM: ${RPC_ETHEREUM}
+      RPC_BASE: ${RPC_BASE}
+      RPC_POLYGON: ${RPC_POLYGON}
+      INTERVAL_SECONDS: ${INTERVAL_SECONDS:-300}
+    ports:
+      - "3002:3000"
+
+  feeder-9945:
+    <<: *feeder-common
+    environment:
+      SUBSTRATE_NODE_URL: ws://host.docker.internal:9935
+      RPC_ETHEREUM: ${RPC_ETHEREUM}
+      RPC_BASE: ${RPC_BASE}
+      RPC_POLYGON: ${RPC_POLYGON}
+      INTERVAL_SECONDS: ${INTERVAL_SECONDS:-300}
+    ports:
+      - "3003:3000"
