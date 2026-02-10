@@ -76,8 +76,8 @@ Rates:
           asset_b: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"  # USDC
           sources: []
 
-  BASE-AERO-USD:
-    general_base_symbol: BASE-AERO-USD
+  AERO-USD:
+    general_base_symbol: AERO-USD
     base_currency:
       dexes:
         - adapter: uniswap-v3
@@ -86,8 +86,8 @@ Rates:
           asset_b: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"  # USDC
           sources: [500, 3000]
 
-  BASE-DAI-USD:
-    general_base_symbol: BASE-DAI-USD
+  DAI-USD:
+    general_base_symbol: DAI-USD
     base_currency:
       dexes:
         - adapter: uniswap-v3
@@ -96,8 +96,8 @@ Rates:
           asset_b: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"  # USDC
           sources: [500, 3000]
 
-  BASE-DEGEN-USD:
-    general_base_symbol: BASE-DEGEN-USD
+  DEGEN-USD:
+    general_base_symbol: DEGEN-USD
     base_currency:
       dexes:
         - adapter: uniswap-v3
@@ -106,18 +106,8 @@ Rates:
           asset_b: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"  # USDC
           sources: [500, 3000]
 
-  BASE-BRETT-USD:
-    general_base_symbol: BASE-BRETT-USD
-    base_currency:
-      dexes:
-        - adapter: uniswap-v3
-          chain_id: 8453
-          asset_a: "0x532f27101965dd16442E59d40670FaF5eBB142E4"  # BRETT
-          asset_b: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"  # USDC
-          sources: [500, 3000]
-
-  BASE-CBETH-USD:
-    general_base_symbol: BASE-CBETH-USD
+  CBETH-USD:
+    general_base_symbol: CBETH-USD
     base_currency:
       dexes:
         - adapter: uniswap-v3
@@ -126,8 +116,8 @@ Rates:
           asset_b: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"  # USDC
           sources: [500, 3000]
 
-  POLYGON-WMATIC-USD:
-    general_base_symbol: POLYGON-WMATIC-USD
+  WMATIC-USD:
+    general_base_symbol: WMATIC-USD
     base_currency:
       dexes:
         - adapter: uniswap-v3
@@ -136,18 +126,8 @@ Rates:
           asset_b: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"  # USDC
           sources: [500, 3000]
 
-  POLYGON-QUICK-USD:
-    general_base_symbol: POLYGON-QUICK-USD
-    base_currency:
-      dexes:
-        - adapter: uniswap-v3
-          chain_id: 137
-          asset_a: "0xB5C064F955D8e7F38fE0460C556a72987494eE17"  # QUICK (new)
-          asset_b: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"  # USDC
-          sources: [500, 3000]
-
-  POLYGON-GHST-USD:
-    general_base_symbol: POLYGON-GHST-USD
+  GHST-USD:
+    general_base_symbol: GHST-USD
     base_currency:
       dexes:
         - adapter: uniswap-v3
@@ -156,22 +136,12 @@ Rates:
           asset_b: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"  # USDC
           sources: [500, 3000]
 
-  POLYGON-USDT-USD:
-    general_base_symbol: POLYGON-USDT-USD
+  USDT-USD:
+    general_base_symbol: USDT-USD
     base_currency:
       dexes:
         - adapter: uniswap-v3
           chain_id: 137
           asset_a: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"  # USDT
-          asset_b: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"  # USDC
-          sources: [500, 3000]
-
-  POLYGON-QI-USD:
-    general_base_symbol: POLYGON-QI-USD
-    base_currency:
-      dexes:
-        - adapter: uniswap-v3
-          chain_id: 137
-          asset_a: "0x580A84C73811E1839F75d86d75d88cCa0c241fF4"  # QI
           asset_b: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"  # USDC
           sources: [500, 3000]
