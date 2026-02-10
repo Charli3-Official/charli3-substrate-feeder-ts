@@ -34,8 +34,9 @@ export async function processAndSubmit(
         }
     }
 
-    if (substrateService && Object.keys(pricesToSubmit).length > 0) {
-        console.log('\nSubmitting prices to Substrate...');
+    const pairCount = Object.keys(pricesToSubmit).length;
+    if (substrateService && pairCount > 0) {
+        console.log(`\nSubmitting ${pairCount} prices to Substrate...`);
         await substrateService.insertPrices(pricesToSubmit);
     }
 }

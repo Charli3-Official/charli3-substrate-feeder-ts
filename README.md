@@ -121,6 +121,23 @@ npm run start:config -- config.yml
 
 The server listens on port 3000 by default.
 
+## Docker Compose (3 nodes)
+
+This repo includes a `docker-compose.yml` that spins up 3 feeder instances, each pointing at a different Substrate node port and fetching 14 pairs (5 Ethereum, 5 Base, 5 Polygon).
+
+Setup:
+1. Copy `.env.example` to `.env` and set your RPC URLs.
+2. Update Substrate node ports in `docker-compose.yml` if needed.
+
+Run:
+```bash
+docker compose up --build
+```
+
+Notes:
+- Default interval is 300 seconds; override with `INTERVAL_SECONDS` in `.env`.
+- RPC URLs are provided via env vars: `RPC_ETHEREUM`, `RPC_BASE`, `RPC_POLYGON`.
+
 ### API Endpoints
 
 **GET /health** - Server status and configured chains

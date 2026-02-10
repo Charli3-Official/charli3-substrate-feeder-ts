@@ -1,0 +1,177 @@
+Logger:
+  verbosity: INFO
+
+EVMChains:
+  - chain_id: 1
+    name: ethereum
+    rpc_url: __RPC_ETHEREUM__
+    factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+    max_concurrent: 10
+
+  - chain_id: 8453
+    name: base
+    rpc_url: __RPC_BASE__
+    factory_address: "0x33128a8fC17869897dcE68Ed026d694621f6FDfD"
+    max_concurrent: 10
+
+  - chain_id: 137
+    name: polygon
+    rpc_url: __RPC_POLYGON__
+    factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+    max_concurrent: 10
+
+Substrate:
+  node_url: __SUBSTRATE_NODE_URL__
+
+Rates:
+  WETH-USD:
+    general_base_symbol: WETH-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 1
+          asset_a: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"  # WETH
+          asset_b: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"  # USDC
+          quote_required: false
+          sources: []
+
+  LINK-USD:
+    general_base_symbol: LINK-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 1
+          asset_a: "0x514910771AF9Ca656af840dff83E8264EcF986CA"  # LINK
+          asset_b: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"  # USDC
+          quote_required: false
+          sources: []
+
+  AAVE-USD:
+    general_base_symbol: AAVE-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 1
+          asset_a: "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9"  # AAVE
+          asset_b: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"  # USDC
+          sources: []
+
+  UNI-USD:
+    general_base_symbol: UNI-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 1
+          asset_a: "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984"  # UNI
+          asset_b: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"  # USDC
+          sources: []
+
+  WBTC-USD:
+    general_base_symbol: WBTC-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 1
+          asset_a: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"  # WBTC
+          asset_b: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"  # USDC
+          sources: []
+
+  BASE-AERO-USD:
+    general_base_symbol: BASE-AERO-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 8453
+          asset_a: "0x940181a94A35A4569E4529A3CDfB74e38FD98631"  # AERO
+          asset_b: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"  # USDC
+          sources: [500, 3000]
+
+  BASE-DAI-USD:
+    general_base_symbol: BASE-DAI-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 8453
+          asset_a: "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb"  # DAI
+          asset_b: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"  # USDC
+          sources: [500, 3000]
+
+  BASE-DEGEN-USD:
+    general_base_symbol: BASE-DEGEN-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 8453
+          asset_a: "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed"  # DEGEN
+          asset_b: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"  # USDC
+          sources: [500, 3000]
+
+  BASE-BRETT-USD:
+    general_base_symbol: BASE-BRETT-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 8453
+          asset_a: "0x532f27101965dd16442E59d40670FaF5eBB142E4"  # BRETT
+          asset_b: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"  # USDC
+          sources: [500, 3000]
+
+  BASE-CBETH-USD:
+    general_base_symbol: BASE-CBETH-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 8453
+          asset_a: "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22"  # cbETH
+          asset_b: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"  # USDC
+          sources: [500, 3000]
+
+  POLYGON-WMATIC-USD:
+    general_base_symbol: POLYGON-WMATIC-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 137
+          asset_a: "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270"  # WMATIC
+          asset_b: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"  # USDC
+          sources: [500, 3000]
+
+  POLYGON-QUICK-USD:
+    general_base_symbol: POLYGON-QUICK-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 137
+          asset_a: "0xB5C064F955D8e7F38fE0460C556a72987494eE17"  # QUICK (new)
+          asset_b: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"  # USDC
+          sources: [500, 3000]
+
+  POLYGON-GHST-USD:
+    general_base_symbol: POLYGON-GHST-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 137
+          asset_a: "0x385Eeac5cB85A38A9a07A70c73e0a3271CfB54A7"  # GHST
+          asset_b: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"  # USDC
+          sources: [500, 3000]
+
+  POLYGON-USDT-USD:
+    general_base_symbol: POLYGON-USDT-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 137
+          asset_a: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"  # USDT
+          asset_b: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"  # USDC
+          sources: [500, 3000]
+
+  POLYGON-QI-USD:
+    general_base_symbol: POLYGON-QI-USD
+    base_currency:
+      dexes:
+        - adapter: uniswap-v3
+          chain_id: 137
+          asset_a: "0x580A84C73811E1839F75d86d75d88cCa0c241fF4"  # QI
+          asset_b: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"  # USDC
+          sources: [500, 3000]
