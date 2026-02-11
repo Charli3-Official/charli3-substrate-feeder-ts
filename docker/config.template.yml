@@ -156,22 +156,22 @@ Rates:
           asset_b: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174" # USDC
           sources: [500, 3000]
 
-  BNB-USDC:
-    general_base_symbol: BNB-USDC
+  SUSHI-USDC:
+    general_base_symbol: SUSHI-USDC
     base_currency:
       dexes:
         - adapter: uniswap-v3
           chain_id: 137
-          asset_a: "0x3BA4c387f786bFEE076A58914F5Bd38d668B42c3" # BNB
+          asset_a: "0x0b3F868E0BE5597D5DB7fEB59E1CADBb0fdDa50a" # SUSHI
           asset_b: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174" # USDC
           sources: [500, 3000]
 
-  AVAX-USDC:
-    general_base_symbol: AVAX-USDC
+  MANA-USDC:
+    general_base_symbol: MANA-USDC
     base_currency:
       dexes:
         - adapter: uniswap-v3
           chain_id: 137
-          asset_a: "0x2C89bbc92BD86F8075d1DEcc58C7F4E0107f286b" # AVAX
+          asset_a: "0xA1c57f48F0Deb89f569dFbE6E2B7f46D33606fD4" # MANA
           asset_b: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174" # USDC
           sources: [500, 3000]
