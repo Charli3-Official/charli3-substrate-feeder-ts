@@ -4,7 +4,7 @@ Logger:
 EVMChains:
   - chain_id: 56
     name: bsc
-    rpc_url: https://bsc-dataseed.binance.org
+    rpc_url: ${RPC_BSC}
     factory_address: "0x0BFbCF9fa4f9C56B0F40a671Ad40E0805A091865"
     max_concurrent: 10
 

@@ -4,24 +4,24 @@ Logger:
 EVMChains:
   - chain_id: 1
     name: ethereum
-    rpc_url: __RPC_ETHEREUM__
+    rpc_url: ${RPC_ETHEREUM}
     factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
     max_concurrent: 10
 
   - chain_id: 8453
     name: base
-    rpc_url: __RPC_BASE__
+    rpc_url: ${RPC_BASE}
     factory_address: "0x33128a8fC17869897dcE68Ed026d694621f6FDfD"
     max_concurrent: 10
 
   - chain_id: 137
     name: polygon
-    rpc_url: __RPC_POLYGON__
+    rpc_url: ${RPC_POLYGON}
     factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
     max_concurrent: 10
 
 Substrate:
-  node_url: __SUBSTRATE_NODE_URL__
+  node_url: ${SUBSTRATE_NODE_URL}
 
 Rates:
   WETH-USDC:

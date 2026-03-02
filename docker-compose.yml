@@ -15,9 +15,12 @@ services:
     environment:
       SUBSTRATE_NODE_URL: ws://host.docker.internal:9933
       RPC_ETHEREUM: ${RPC_ETHEREUM}
+      RPC_BSC: ${RPC_BSC}
       RPC_BASE: ${RPC_BASE}
       RPC_POLYGON: ${RPC_POLYGON}
-      INTERVAL_SECONDS: ${INTERVAL_SECONDS:-1800}
+      RPC_ARBITRUM: ${RPC_ARBITRUM}
+      RPC_OPTIMISM: ${RPC_OPTIMISM}
+      INTERVAL_SECONDS: ${INTERVAL_SECONDS:-60}
     ports:
       - "3001:3000"
 
@@ -26,9 +29,12 @@ services:
     environment:
       SUBSTRATE_NODE_URL: ws://host.docker.internal:9934
       RPC_ETHEREUM: ${RPC_ETHEREUM}
+      RPC_BSC: ${RPC_BSC}
       RPC_BASE: ${RPC_BASE}
       RPC_POLYGON: ${RPC_POLYGON}
-      INTERVAL_SECONDS: ${INTERVAL_SECONDS:-1800}
+      RPC_ARBITRUM: ${RPC_ARBITRUM}
+      RPC_OPTIMISM: ${RPC_OPTIMISM}
+      INTERVAL_SECONDS: ${INTERVAL_SECONDS:-60}
     ports:
       - "3002:3000"
 
@@ -37,8 +43,11 @@ services:
     environment:
       SUBSTRATE_NODE_URL: ws://host.docker.internal:9935
       RPC_ETHEREUM: ${RPC_ETHEREUM}
+      RPC_BSC: ${RPC_BSC}
       RPC_BASE: ${RPC_BASE}
       RPC_POLYGON: ${RPC_POLYGON}
-      INTERVAL_SECONDS: ${INTERVAL_SECONDS:-1800}
+      RPC_ARBITRUM: ${RPC_ARBITRUM}
+      RPC_OPTIMISM: ${RPC_OPTIMISM}
+      INTERVAL_SECONDS: ${INTERVAL_SECONDS:-60}
     ports:
       - "3003:3000"

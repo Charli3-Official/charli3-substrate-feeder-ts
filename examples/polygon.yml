@@ -4,7 +4,7 @@ Logger:
 EVMChains:
   - chain_id: 137
     name: polygon
-    rpc_url: https://polygon-bor-rpc.publicnode.com
+    rpc_url: ${RPC_POLYGON}
     factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
     max_concurrent: 10
 

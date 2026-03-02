@@ -4,7 +4,7 @@ Logger:
 EVMChains:
   - chain_id: 10
     name: optimism
-    rpc_url: https://mainnet.optimism.io
+    rpc_url: ${RPC_OPTIMISM}
     factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
     max_concurrent: 10
 

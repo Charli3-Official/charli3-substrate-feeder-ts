@@ -4,7 +4,7 @@ Logger:
 EVMChains:
   - chain_id: 8453
     name: base
-    rpc_url: https://base.llamarpc.com
+    rpc_url: ${RPC_BASE}
     factory_address: "0x33128a8fC17869897dcE68Ed026d694621f6FDfD"
     max_concurrent: 10
 
