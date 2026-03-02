@@ -1,14 +1,37 @@
 import { readFileSync } from 'fs';
 import * as yaml from 'yaml';
+import * as dotenv from 'dotenv';
 import { AppConfig } from '../types/config';
 
+// Load environment variables from .env file if it exists
+dotenv.config();
+
 /**
- * Load and parse YAML configuration file
+ * Substitute environment variables in a string
+ * Supports ${VAR}, $VAR, and __VAR__ formats
+ */
+function substituteEnvVars(content: string): string {
+    // Replace ${VAR} and $VAR
+    let substituted = content.replace(/\${?(\w+)}?/g, (match, name) => {
+        return process.env[name] || match;
+    });
+    
+    // Replace __VAR__ (used in Docker templates)
+    substituted = substituted.replace(/__(\w+)__/g, (match, name) => {
+        return process.env[name] || match;
+    });
+
+    return substituted;
+}
+
+/**
+ * Load and parse YAML configuration file with environment variable substitution
  */
 export function loadConfig(configPath: string): AppConfig {
     try {
         const fileContents = readFileSync(configPath, 'utf8');
-        const config = yaml.parse(fileContents) as AppConfig;
+        const substitutedContents = substituteEnvVars(fileContents);
+        const config = yaml.parse(substitutedContents) as AppConfig;
 
         // Validate required fields
         if (!config.Logger) {

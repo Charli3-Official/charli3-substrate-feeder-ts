@@ -5,43 +5,43 @@ Logger:
 EVMChains:
   - chain_id: 1
     name: ethereum
-    rpc_url: https://eth.llamarpc.com
+    rpc_url: ${RPC_ETHEREUM}
     factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
     max_concurrent: 10  # Optional: max concurrent RPC requests
   
   - chain_id: 56
     name: bsc
-    rpc_url: https://bsc-dataseed.binance.org
+    rpc_url: ${RPC_BSC}
     factory_address: "0x0BFbCF9fa4f9C56B0F40a671Ad40E0805A091865"
     max_concurrent: 10
   
   - chain_id: 8453
     name: base
-    rpc_url: https://base.llamarpc.com
+    rpc_url: ${RPC_BASE}
     factory_address: "0x33128a8fC17869897dcE68Ed026d694621f6FDfD"
     max_concurrent: 10
   
   - chain_id: 137
     name: polygon
-    rpc_url: https://polygon-bor-rpc.publicnode.com
+    rpc_url: ${RPC_POLYGON}
     factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
     max_concurrent: 10
   
   - chain_id: 42161
     name: arbitrum
-    rpc_url: https://arb1.arbitrum.io/rpc
+    rpc_url: ${RPC_ARBITRUM}
     factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
     max_concurrent: 10
   
   - chain_id: 10
     name: optimism
-    rpc_url: https://mainnet.optimism.io
+    rpc_url: ${RPC_OPTIMISM}
     factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
     max_concurrent: 10
 
 # Optional: Substrate integration
 # Substrate:
-#   node_url: ws://127.0.0.1:9948
+#   node_url: ${SUBSTRATE_NODE_URL}
 
 Rates:
   # Ethereum: WETH/USDC

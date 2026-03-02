@@ -14,17 +14,16 @@ if [ -z "${SUBSTRATE_NODE_URL:-}" ]; then
   exit 1
 fi
 
-: "${RPC_ETHEREUM:=https://eth.llamarpc.com}"
-: "${RPC_BASE:=https://base.llamarpc.com}"
-: "${RPC_POLYGON:=https://polygon-bor-rpc.publicnode.com}"
+# Set defaults for RPC vars (public endpoints as fallback)
+export RPC_ETHEREUM="${RPC_ETHEREUM:-https://eth.llamarpc.com}"
+export RPC_BSC="${RPC_BSC:-https://bsc-dataseed.binance.org}"
+export RPC_BASE="${RPC_BASE:-https://base.llamarpc.com}"
+export RPC_POLYGON="${RPC_POLYGON:-https://polygon-bor-rpc.publicnode.com}"
+export RPC_ARBITRUM="${RPC_ARBITRUM:-https://arb1.arbitrum.io/rpc}"
+export RPC_OPTIMISM="${RPC_OPTIMISM:-https://mainnet.optimism.io}"
 
-rendered=$(cat "$TEMPLATE_PATH")
-for var in SUBSTRATE_NODE_URL RPC_ETHEREUM RPC_BASE RPC_POLYGON; do
-  val=$(printenv "$var")
-  rendered=$(printf '%s' "$rendered" | sed "s|__${var}__|$val|g")
-done
-
-printf '%s\n' "$rendered" > "$OUTPUT_PATH"
+# Copy template — ${VAR} substitution is handled by configLoader
+cp "$TEMPLATE_PATH" "$OUTPUT_PATH"
 
 if [ -n "${INTERVAL_SECONDS:-}" ]; then
   case " $* " in

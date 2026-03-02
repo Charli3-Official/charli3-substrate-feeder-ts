@@ -33,20 +33,28 @@ npm run build
 
 ## Configuration
 
-Create a `config.yml` file based on the examples in the [examples/](examples/) folder.
+Create a `config.yml` file based on the examples in the [examples/](examples/) folder. The service supports **environment variable substitution** in your YAML configuration.
 
-- For single-chain adapter setup, use the chain-specific config (e.g., [ethereum.yml](examples/ethereum.yml)).
-- For multi-chain setups, use [consolidated.yml](examples/consolidated.yml) as a starting point.
+### Environment Variables
 
-### Basic Structure
+You can use `${VAR}` placeholders in your YAML files. These will be replaced by values from your `.env` file or system environment variables.
+
+1. Copy `.env.example` to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+2. Set your RPC URLs in `.env`.
+
+### Basic Structure (with Env Vars)
 
 ```yaml
 EVMChains:
   - chain_id: 1
     name: ethereum
-    rpc_url: https://eth.llamarpc.com
+    rpc_url: ${RPC_ETHEREUM}
     factory_address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
-    max_concurrent: 10  # Optional
+    max_concurrent: 10
+```
 
 Rates:
   ETH-USD:
