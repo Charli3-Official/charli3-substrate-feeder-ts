@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 import { Token, CurrencyAmount } from '@uniswap/sdk-core';
-import { Pool, FeeAmount, computePoolAddress } from '@uniswap/v3-sdk';
+import { Pool, FeeAmount } from '@uniswap/v3-sdk';
 import UniswapV3Pool from '@uniswap/v3-core/artifacts/contracts/UniswapV3Pool.sol/UniswapV3Pool.json';
 import IERC20Metadata from '@uniswap/v3-periphery/artifacts/contracts/interfaces/IERC20Metadata.sol/IERC20Metadata.json';
 import { BaseAdapter } from '../BaseAdapter';
@@ -76,26 +76,11 @@ export class UniswapV3Adapter extends BaseAdapter {
                 quoteToken.symbol
             );
 
-            // First try to compute pool address (works for Uniswap V3)
-            let poolAddress = computePoolAddress({
-                factoryAddress: this.factoryAddress,
-                tokenA: token0,
-                tokenB: token1,
-                fee,
-            });
+            const factoryContract = new ethers.Contract(this.factoryAddress, FACTORY_ABI, this.provider) as any;
+            const poolAddress = await factoryContract.getPool(baseToken.address, quoteToken.address, fee);
 
-            // Check if pool exists at computed address
-            const code = await this.provider.getCode(poolAddress);
-            
-            // If no pool at computed address, query factory directly (works for PancakeSwap V3)
-            if (code === '0x') {
-                const factoryContract = new ethers.Contract(this.factoryAddress, FACTORY_ABI, this.provider) as any;
-                poolAddress = await factoryContract.getPool(baseToken.address, quoteToken.address, fee);
-                
-                // If factory returns zero address, pool doesn't exist
-                if (poolAddress === ethers.ZeroAddress) {
-                    return null;
-                }
+            if (poolAddress === ethers.ZeroAddress) {
+                return null;
             }
 
             const poolContract = new ethers.Contract(poolAddress, POOL_ABI, this.provider) as any;
