@@ -24,7 +24,9 @@ export class UniswapV3Adapter extends BaseAdapter {
         feeTiers?: FeeAmount[]
     ) {
         super(baseAsset, quoteAsset, config);
-        this.provider = new ethers.JsonRpcProvider(config.rpcUrl);
+        const fetchReq = new ethers.FetchRequest(config.rpcUrl);
+        fetchReq.timeout = 15000; // 15 second timeout per RPC call
+        this.provider = new ethers.JsonRpcProvider(fetchReq, config.chainId, { staticNetwork: true });
         this.factoryAddress = config.factoryAddress || getFactoryAddress(config.chainId);
 
         this.feeTiers = feeTiers || [
